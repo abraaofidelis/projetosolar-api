@@ -1,6 +1,7 @@
 package com.abraaofidelis.projetosolar.models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -8,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -79,7 +81,8 @@ public class Cliente {
 	@Size(groups = {CreateCliente.class, UpdateCliente.class},min = 2, max=2)
 	private String uf;
 	
-	//private List<Projeto> projetos = new ArrayList<Projeto>();
+	@OneToMany(mappedBy = "cliente")
+	private List<Projeto> projetos = new ArrayList<Projeto>();
 	
 	public Cliente() {
 		
