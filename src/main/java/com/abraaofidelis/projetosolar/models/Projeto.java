@@ -122,7 +122,7 @@ public class Projeto {
 		return this.irradianciaSolar;
 	}
 	
-	public void setIrradianciaSolaro(Double irradianciaSolar) {
+	public void setIrradianciaSolar(Double irradianciaSolar) {
 		this.irradianciaSolar = irradianciaSolar;
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
@@ -137,6 +137,14 @@ public class Projeto {
 	
 	public Double getPotenciaSistema() {
 		return this.potenciaSistema;
+	}
+	
+	public Cliente getCliente() {
+		return this.cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	//Método que será usado no calculo da pontencia do sistema solar
