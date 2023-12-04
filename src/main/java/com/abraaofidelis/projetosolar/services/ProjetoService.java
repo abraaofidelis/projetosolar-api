@@ -1,5 +1,6 @@
 package com.abraaofidelis.projetosolar.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,18 @@ public class ProjetoService {
 	
 	@Autowired
 	private ProjetoRepository projetoRepository;
-	
+	@Autowired
 	private ClienteService clienteService;
 
 	public Projeto findById(Long id) {
 		Optional<Projeto> projeto = this.projetoRepository.findById(id);
 		return projeto.orElseThrow(()-> new RuntimeException(
 				"Tarefa não encontrada! Id: " + id));
+	}
+	
+	public List<Projeto> findAllByUserId(Long clienteId){
+		List<Projeto> projetos = this.projetoRepository.findByCliente_Id(clienteId);
+		return projetos;
 	}
 	
 	@Transactional

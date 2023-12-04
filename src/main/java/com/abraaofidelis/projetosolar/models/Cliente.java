@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,7 +57,7 @@ public class Cliente {
 	@Column(name = "numero", nullable = false)
 	@NotNull(groups = {CreateCliente.class, UpdateCliente.class})
 	@NotEmpty(groups = {CreateCliente.class, UpdateCliente.class})
-	private Integer numero;
+	private String numero;
 	
 	@Column(name = "complemento", length = 100)
 	private String complemento;
@@ -88,7 +90,7 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(Long id, String nome, String cpf, String celular, String logradouro, Integer numero, String complemento, String bairro, String cep, String cidade, String uf) {
+	public Cliente(Long id, String nome, String cpf, String celular, String logradouro, String numero, String complemento, String bairro, String cep, String cidade, String uf) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -138,10 +140,10 @@ public class Cliente {
 		this.logradouro = logradouro;
 	}
 	
-	public Integer getNumero() {
+	public String getNumero() {
 		return this.numero;
 	}
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	
@@ -178,6 +180,15 @@ public class Cliente {
 	}
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+	
+	@JsonIgnore
+	public List<Projeto> getProjetos(){
+		return this.projetos;
+	}
+	
+	public void setProjetos(List<Projeto> projetos) {
+		this.projetos = projetos;
 	}
 	
 	//Equals

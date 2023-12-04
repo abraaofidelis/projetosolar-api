@@ -30,7 +30,7 @@ public class Projeto {
 	@Column(name = "cosumo_medio", nullable = false)
 	@NotNull (groups = {CreateProjeto.class, UpdateProjeto.class})
 	@NotEmpty (groups = {CreateProjeto.class, UpdateProjeto.class})
-	private Double consumoMedio;
+	private double consumoMedio;
 	
 	/*
 	 *  Informar se a ligação residencial é Monofásica, Bifásica ou Trifásica
@@ -41,13 +41,13 @@ public class Projeto {
 	@Column(name = "tipo_ligacao", nullable = false)
 	@NotNull (groups = {CreateProjeto.class, UpdateProjeto.class})
 	@NotEmpty (groups = {CreateProjeto.class, UpdateProjeto.class})
-	private Integer tipoLigacao;
+	private int tipoLigacao;
 	
 	// Informar o percentual de perdas que será considerada no dimensionamento do sistema solar
 	@Column(name = "perdas_totais", nullable = false)
 	@NotNull (groups = {CreateProjeto.class, UpdateProjeto.class})
 	@NotEmpty (groups = {CreateProjeto.class, UpdateProjeto.class})
-	private Double percentualDePerdas;
+	private double percentualDePerdas;
 	
 	/* 
 	 * Informar o valor da irradiancia solar que será considerada, normalmente depende
@@ -57,16 +57,16 @@ public class Projeto {
 	@Column(name = "irradiancia_solar", nullable = false)
 	@NotNull (groups = {CreateProjeto.class, UpdateProjeto.class})
 	@NotEmpty (groups = {CreateProjeto.class, UpdateProjeto.class})
-	private Double irradianciaSolar;
+	private double irradianciaSolar;
 	
-	@Column(name = "potencia_sistema", nullable = false)
-	private Double potenciaSistema;
+	@Column(name = "potencia_sistema", nullable = false, precision = 2)
+	private double potenciaSistema;
 	
 	@Column(name = "consumo_minimo", nullable = false)
-	private Double consumoMinimo;
+	private double consumoMinimo;
 	
 	@Column(name = "consumo_projeto", nullable = false)
-	private Double consumoParaProjeto;
+	private double consumoParaProjeto;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false, updatable = false)
@@ -75,11 +75,12 @@ public class Projeto {
 	
 	public Projeto() {}
 	
-	public Projeto(Double consumoMedio, Integer tipoLigacao, Double percentualDePerdas, Double irradianciaSolar) {
+	public Projeto(double consumoMedio, int tipoLigacao, double percentualDePerdas, double irradianciaSolar, Cliente cliente) {
 		this.consumoMedio = consumoMedio;
 		this.tipoLigacao = tipoLigacao;
 		this.percentualDePerdas = percentualDePerdas;
 		this.irradianciaSolar = irradianciaSolar;
+		this.cliente = cliente;
 		
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
@@ -92,50 +93,50 @@ public class Projeto {
 		this.id = id;
 	}
 	
-	public Double getConsumoMedio() {
+	public double getConsumoMedio() {
 		return this.consumoMedio;
 	}
 	
-	public void setConsumoMedio(Double consumoMedio) {
+	public void setConsumoMedio(double consumoMedio) {
 		this.consumoMedio = consumoMedio;
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
 	
-	public Integer getTipoLigacao() {
+	public int getTipoLigacao() {
 		return this.tipoLigacao;
 	}
 	
-	public void setTipoLigacao(Integer tipoLigacao) {
+	public void setTipoLigacao(int tipoLigacao) {
 		this.tipoLigacao = tipoLigacao;
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
-	public Double getPercentualDePerdas() {
+	public double getPercentualDePerdas() {
 		return this.percentualDePerdas;
 	}
 	
-	public void setPercentualDePerdas(Double percentualDePerdas) {
+	public void setPercentualDePerdas(double percentualDePerdas) {
 		this.percentualDePerdas = percentualDePerdas;
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
 	
-	public Double getIrradianciaSolar() {
+	public double getIrradianciaSolar() {
 		return this.irradianciaSolar;
 	}
 	
-	public void setIrradianciaSolar(Double irradianciaSolar) {
+	public void setIrradianciaSolar(double irradianciaSolar) {
 		this.irradianciaSolar = irradianciaSolar;
 		this.calculaPotencia(this.consumoMedio, this.tipoLigacao, this.percentualDePerdas, this.irradianciaSolar);
 	}
 	
-	public Double getConsumoMinimo() {
+	public double getConsumoMinimo() {
 		return this.consumoMinimo;
 	}
 	
-	public Double getConsumoParaProjeto() {
+	public double getConsumoParaProjeto() {
 		return this.consumoParaProjeto;
 	}
 	
-	public Double getPotenciaSistema() {
+	public double getPotenciaSistema() {
 		return this.potenciaSistema;
 	}
 	
@@ -148,7 +149,7 @@ public class Projeto {
 	}
 	
 	//Método que será usado no calculo da pontencia do sistema solar
-	private void calculaPotencia(Double consumoMedio, Integer tipoLigacao, Double percentualDePerdas, Double irradianciaSolar) {
+	private void calculaPotencia(double consumoMedio, int tipoLigacao, double percentualDePerdas, double irradianciaSolar) {
 		//Verifica o tipo de ligaçao para calcular o tanto de consumo que sera considerado no projeto
 		if (tipoLigacao == 1) {
 			this.consumoMinimo = 25.0;
